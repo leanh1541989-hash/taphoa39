@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="header-section">
+    <h1>Sổ Chi Tiết Vật Liệu – Hàng Hóa</h1>
+    <p>Quản lý hàng tồn kho</p>
+  </div>
+
+  <div class="form-section">
+    <h2>Thêm Mục Hàng Hóa</h2>
+    <form (ngSubmit)="addRecord()" class="form-grid">
+      <div class="form-group">
+        <label>Ngày *</label>
+        <input type="date" [(ngModel)]="newRecord.ngay" name="ngay" required />
+      </div>
+      <div class="form-group">
+        <label>Tên Hàng *</label>
+        <input type="text" [(ngModel)]="newRecord.tenHang" name="tenHang" placeholder="e.g., Sữa tươi" required />
+      </div>
+      <div class="form-group">
+        <label>Đơn Vị Tính</label>
+        <input type="text" [(ngModel)]="newRecord.donViTinh" name="donViTinh" placeholder="e.g., chai, cái" />
+      </div>
+      <div class="form-group">
+        <label>Tồn Đầu Kỳ</label>
+        <input type="number" [(ngModel)]="newRecord.tonDauKy" name="tonDauKy" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Nhập Trong Kỳ</label>
+        <input type="number" [(ngModel)]="newRecord.nhapTrongKy" name="nhapTrongKy" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Xuất Trong Kỳ</label>
+        <input type="number" [(ngModel)]="newRecord.xuatTrongKy" name="xuatTrongKy" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Hao Hụt/Hủy</label>
+        <input type="number" [(ngModel)]="newRecord.haoHutHuy" name="haoHutHuy" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Ghi Chú</label>
+        <input type="text" [(ngModel)]="newRecord.ghiChu" name="ghiChu" />
+      </div>
+      <div class="form-group">
+        <button type="submit" class="form-submit">
+          Thêm Mục Hàng
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="table-container">
+    <app-ledger-table [data]="filteredData" [columns]="tableColumns" (rowSaved)="updateRecord($event)" (rowDeleted)="deleteRecord($event)"></app-ledger-table>
+  </div>
+</div>

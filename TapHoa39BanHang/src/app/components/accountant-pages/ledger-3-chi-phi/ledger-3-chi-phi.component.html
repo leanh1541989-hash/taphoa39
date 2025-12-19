@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="header-section">
+    <h1>Sổ Chi Phí Sản Xuất Kinh Doanh</h1>
+    <p>Quản lý chi phí hoạt động</p>
+  </div>
+
+  <div class="form-section">
+    <h2>Thêm Chi Phí</h2>
+    <form (ngSubmit)="addRecord()" class="form-grid">
+      <div class="form-group">
+        <label>Ngày Chi *</label>
+        <input type="date" [(ngModel)]="newRecord.ngayChi" name="ngayChi" required />
+      </div>
+      <div class="form-group">
+        <label>Nội Dung Chi *</label>
+        <input type="text" [(ngModel)]="newRecord.noiDungChi" name="noiDungChi" required />
+      </div>
+      <div class="form-group">
+        <label>Loại Chi Phí *</label>
+        <select [(ngModel)]="newRecord.loaiChiPhi" name="loaiChiPhi" required>
+          <option value="GiaVon">Giá Vốn</option>
+          <option value="LuongCong">Lương Công</option>
+          <option value="ThueMBang">Thuê Mặt Bằng</option>
+          <option value="DienNuoc">Điện Nước</option>
+          <option value="VanChuyen">Vận Chuyển</option>
+          <option value="Khac">Khác</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Số Tiền (Chưa VAT) *</label>
+        <input type="number" [(ngModel)]="newRecord.soTienChuaVAT" name="soTienChuaVAT" required />
+      </div>
+      <div class="form-group">
+        <label>VAT Khấu Trừ</label>
+        <input type="number" [(ngModel)]="newRecord.vatKhauTru" name="vatKhauTru" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Hình Thức TT</label>
+        <select [(ngModel)]="newRecord.hinhThucThanhToan" name="hinhThucThanhToan">
+          <option value="TM">Tiền Mặt</option>
+          <option value="CK">Chuyển Khoản</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Chứng Từ</label>
+        <input type="text" [(ngModel)]="newRecord.chungTuKemTheo" name="chungTuKemTheo" />
+      </div>
+      <div class="form-group">
+        <label>Ghi Chú</label>
+        <input type="text" [(ngModel)]="newRecord.ghiChu" name="ghiChu" />
+      </div>
+      <div class="form-group">
+        <button type="submit" class="form-submit">
+          Thêm Chi Phí
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="table-container">
+    <app-ledger-table [data]="filteredData" [columns]="tableColumns" (rowSaved)="updateRecord($event)" (rowDeleted)="deleteRecord($event)"></app-ledger-table>
+  </div>
+</div>

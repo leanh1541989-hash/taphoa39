@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="header-section">
+    <h1>Sổ Quỹ Tiền Mặt</h1>
+    <p>Theo dõi thu chi tiền mặt hằng ngày</p>
+  </div>
+
+  <div class="form-section">
+    <h2>Thêm Thu / Chi</h2>
+    <form (ngSubmit)="addRecord()" class="form-grid">
+      <div class="form-group">
+        <label>Ngày *</label>
+        <input type="date" [(ngModel)]="newRecord.ngay" name="ngay" required />
+      </div>
+      <div class="form-group">
+        <label>Nội Dung Thu / Chi *</label>
+        <input type="text" [(ngModel)]="newRecord.noiDungThuChi" name="noiDungThuChi" placeholder="e.g., Doanh thu bán hàng" required />
+      </div>
+      <div class="form-group">
+        <label>Thu (VND)</label>
+        <input type="number" [(ngModel)]="newRecord.thu" name="thu" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Chi (VND)</label>
+        <input type="number" [(ngModel)]="newRecord.chi" name="chi" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Người Thu / Chi</label>
+        <input type="text" [(ngModel)]="newRecord.nguoiThuChi" name="nguoiThuChi" />
+      </div>
+      <div class="form-group">
+        <label>Ghi Chú</label>
+        <input type="text" [(ngModel)]="newRecord.ghiChu" name="ghiChu" />
+      </div>
+      <div class="form-group">
+        <button type="submit" class="form-submit">
+          Thêm Ghi Chép
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="balance-card" [class.negative]="getCurrentBalance() < 0" [class.positive]="getCurrentBalance() >= 0">
+    <p class="stat-label">Tồn Quỹ Hiện Tại</p>
+    <p class="stat-value">{{ formatBalance() }}</p>
+    <p *ngIf="getCurrentBalance() < 0" class="warning-text">
+      ⚠️ CẢNH BÁO: Tồn quỹ âm!
+    </p>
+  </div>
+
+  <div class="table-container">
+    <app-ledger-table [data]="filteredData" [columns]="tableColumns" (rowSaved)="updateRecord($event)" (rowDeleted)="deleteRecord($event)"></app-ledger-table>
+  </div>
+</div>

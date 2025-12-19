@@ -1,0 +1,61 @@
+<div class="main-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <!-- Header -->
+    <div class="sidebar-header">
+      <h2 class="sidebar-title">Kế Toán</h2>
+      <p class="sidebar-subtitle">7 Sổ Kế Toán</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+      <div class="nav-items">
+        <!-- Ledger 1 -->
+        <a routerLink="/accountant/ledger-1" routerLinkActive="active" class="nav-link">
+          <span class="nav-number">1.</span> Sổ Doanh Thu
+        </a>
+
+        <!-- Ledger 2 -->
+        <a routerLink="/accountant/ledger-2" routerLinkActive="active" class="nav-link">
+          <span class="nav-number">2.</span> Sổ Vật Liệu - Hàng Hóa
+        </a>
+
+        <!-- Ledger 3 -->
+        <a routerLink="/accountant/ledger-3" routerLinkActive="active" class="nav-link">
+          <span class="nav-number">3.</span> Sổ Chi Phí
+        </a>
+
+        <!-- Ledger 4 -->
+        <a routerLink="/accountant/ledger-4" routerLinkActive="active" class="nav-link">
+          <span class="nav-number">4.</span> Sổ Lương & Nhân Công
+        </a>
+
+        <!-- Ledger 5 -->
+        <a routerLink="/accountant/ledger-5" routerLinkActive="active" class="nav-link">
+          <span class="nav-number">5.</span> Sổ Công Nợ
+        </a>
+
+        <!-- Ledger 6 -->
+        <a routerLink="/accountant/ledger-6" routerLinkActive="active" class="nav-link">
+          <span class="nav-number">6.</span> Sổ Quỹ Tiền Mặt
+        </a>
+
+        <!-- Ledger 7 -->
+        <a routerLink="/accountant/ledger-7" routerLinkActive="active" class="nav-link">
+          <span class="nav-number">7.</span> Sổ Tiền Ngân Hàng
+        </a>
+      </div>
+    </nav>
+
+    <!-- Footer -->
+    <div class="sidebar-footer">
+      <p>Circular 88/2021/TT-BTC</p>
+      <p>Hộ Kinh Doanh</p>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="header-section">
+    <h1>Sổ Theo Dõi Tiền Lương & Nhân Công</h1>
+    <p>Quản lý tiền lương nhân viên chính thức và nhân công khoán</p>
+  </div>
+
+  <!-- Tab selection -->
+  <div class="tab-buttons">
+    <button
+      (click)="activeTab = 'a'"
+      [class.active]="activeTab === 'a'"
+      class="tab-button"
+    >
+      Nhân Viên Chính Thức
+    </button>
+    <button
+      (click)="activeTab = 'b'"
+      [class.active]="activeTab === 'b'"
+      class="tab-button"
+    >
+      Nhân Công Khoán
+    </button>
+  </div>
+
+  <!-- Tab A: Official Employees -->
+  <div *ngIf="activeTab === 'a'">
+    <div class="form-section">
+      <h2>Thêm Nhân Viên Chính Thức</h2>
+      <form (ngSubmit)="addRecordA()" class="form-grid">
+        <div class="form-group">
+          <label>Tháng *</label>
+          <input type="text" [(ngModel)]="newRecordA.thang" name="thang" placeholder="MM/yyyy" required />
+        </div>
+        <div class="form-group">
+          <label>Họ Tên *</label>
+          <input type="text" [(ngModel)]="newRecordA.hoTen" name="hoTen" required />
+        </div>
+        <div class="form-group">
+          <label>Lương Cơ Bản</label>
+          <input type="number" [(ngModel)]="newRecordA.luongCoBan" name="luongCoBan" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>Phụ Cấp</label>
+          <input type="number" [(ngModel)]="newRecordA.phuCap" name="phuCap" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>BHXH NLĐ</label>
+          <input type="number" [(ngModel)]="newRecordA.bhxhNLD" name="bhxhNLD" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>BHXH Chủ Hộ</label>
+          <input type="number" [(ngModel)]="newRecordA.bhxhChuHo" name="bhxhChuHo" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>Hình Thức Trả</label>
+          <select [(ngModel)]="newRecordA.hinhThucTra" name="hinhThucTra">
+            <option value="TM">Tiền Mặt</option>
+            <option value="CK">Chuyển Khoản</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="form-submit">
+            Thêm NV Chính Thức
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="table-container">
+      <app-ledger-table [data]="filteredDataA" [columns]="tableColumnsA" (rowSaved)="updateRecordA($event)" (rowDeleted)="deleteRecordA($event)"></app-ledger-table>
+    </div>
+  </div>
+
+  <!-- Tab B: Contract Workers -->
+  <div *ngIf="activeTab === 'b'">
+    <div class="form-section">
+      <h2>Thêm Nhân Công Khoán</h2>
+      <form (ngSubmit)="addRecordB()" class="form-grid">
+        <div class="form-group">
+          <label>Ngày Chi *</label>
+          <input type="date" [(ngModel)]="newRecordB.ngayChi" name="ngayChi" required />
+        </div>
+        <div class="form-group">
+          <label>Họ Tên *</label>
+          <input type="text" [(ngModel)]="newRecordB.hoTen" name="hoTen" required />
+        </div>
+        <div class="form-group">
+          <label>Công Việc Khoán *</label>
+          <input type="text" [(ngModel)]="newRecordB.congViecKhoan" name="congViecKhoan" required />
+        </div>
+        <div class="form-group">
+          <label>Số Tiền Khoán *</label>
+          <input type="number" [(ngModel)]="newRecordB.soTienKhoan" name="soTienKhoan" required />
+        </div>
+        <div class="form-group">
+          <label>Số CMND/CCCD</label>
+          <input type="text" [(ngModel)]="newRecordB.soCMND_CCCD" name="soCMND_CCCD" />
+        </div>
+        <div class="form-group checkbox-group">
+          <label>Cam Kết 08 *</label>
+          <input type="checkbox" [(ngModel)]="newRecordB.camKet08" name="camKet08" />
+        </div>
+        <div class="form-group">
+          <label>Thuế TNCN Khấu Trừ</label>
+          <input type="number" [(ngModel)]="newRecordB.thueTNCNKhauTru" name="thueTNCNKhauTru" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <button type="submit" class="form-submit">
+            Thêm Nhân Công
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="table-container">
+      <app-ledger-table [data]="filteredDataB" [columns]="tableColumnsB" (rowSaved)="updateRecordB($event)" (rowDeleted)="deleteRecordB($event)"></app-ledger-table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="header-section">
+    <h1>Sổ Tiền Gửi Ngân Hàng</h1>
+    <p>Theo dõi giao dịch ngân hàng (tương tự bảng kê ngân hàng)</p>
+  </div>
+
+  <div class="form-section">
+    <h2>Thêm Giao Dịch</h2>
+    <form (ngSubmit)="addRecord()" class="form-grid">
+      <div class="form-group">
+        <label>Ngày *</label>
+        <input type="date" [(ngModel)]="newRecord.ngay" name="ngay" required />
+      </div>
+      <div class="form-group">
+        <label>Số Chứng Từ *</label>
+        <input type="text" [(ngModel)]="newRecord.soChungTu" name="soChungTu" placeholder="e.g., REF123456" required />
+      </div>
+      <div class="form-group">
+        <label>Nội Dung Giao Dịch *</label>
+        <input type="text" [(ngModel)]="newRecord.noiDungGiaoDich" name="noiDungGiaoDich" placeholder="Mô tả giao dịch" required />
+      </div>
+      <div class="form-group">
+        <label>Thu (VND)</label>
+        <input type="number" [(ngModel)]="newRecord.thu" name="thu" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Chi (VND)</label>
+        <input type="number" [(ngModel)]="newRecord.chi" name="chi" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Đối Tượng Liên Quan</label>
+        <input type="text" [(ngModel)]="newRecord.doiTuongLienQuan" name="doiTuongLienQuan" placeholder="Tên khách hàng / nhà cung cấp" />
+      </div>
+      <div class="form-group">
+        <label>Ghi Chú</label>
+        <input type="text" [(ngModel)]="newRecord.ghiChu" name="ghiChu" />
+      </div>
+      <div class="form-group">
+        <button type="submit" class="form-submit">
+          Thêm Giao Dịch
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="stat-card blue">
+    <p class="stat-label">Số Dư Hiện Tại</p>
+    <p class="stat-value">{{ getCurrentBalance() }}</p>
+  </div>
+
+  <div class="info-notice">
+    <p>
+      <strong>ℹ️ Lưu ý:</strong> Giao dịch > 20,000,000 đ sẽ được tô sáng vàng để dễ nhận diện
+    </p>
+  </div>
+
+  <div class="table-container">
+    <app-ledger-table [data]="filteredData" [columns]="tableColumns" (rowSaved)="updateRecord($event)" (rowDeleted)="deleteRecord($event)"></app-ledger-table>
+  </div>
+</div>

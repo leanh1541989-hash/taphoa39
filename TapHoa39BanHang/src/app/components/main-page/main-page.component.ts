@@ -48,7 +48,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { ReportPageComponent } from '../report-page/report-page.component';
 import { AddCustomerComponent } from '../customers-page/add-customer/add-customer.component';
 import { CustomersPageComponent } from '../customers-page/customers-page.component';
-import { AddWorkerDialogComponent } from '../add-worker-dialog/add-worker-dialog.component';
+import { AddWorkerDialogComponent } from '../employee-list-page/add-worker-dialog/add-worker-dialog.component';
 import { TimeZoneService } from '../../services/time-zone.service';
 import { OfflineInvoicesListComponent } from '../offline-invoices-list/offline-invoices-list.component';
 import { UtilityService } from '../../services/utility.service';
@@ -2412,6 +2412,27 @@ export class MainPageComponent implements OnInit, OnDestroy, DoCheck, AfterViewI
     } else if (type === 'bangluong') {
       this.saveDataToLocalStorage();
       this.router.navigate(['/payroll']);
+    } else if (type === 'sodoanhthu') {
+      this.saveDataToLocalStorage();
+      this.router.navigate(['/accountant/ledger-1']);
+    } else if (type === 'sohanghoa') {
+      this.saveDataToLocalStorage();
+      this.router.navigate(['/accountant/ledger-2']);
+    } else if (type === 'sophisanxuat') {
+      this.saveDataToLocalStorage();
+      this.router.navigate(['/accountant/ledger-3']);
+    } else if (type === 'sotienluong') {
+      this.saveDataToLocalStorage();
+      this.router.navigate(['/accountant/ledger-4']);
+    } else if (type === 'sothanhtoan') {
+      this.saveDataToLocalStorage();
+      this.router.navigate(['/accountant/ledger-5']);
+    } else if (type === 'soquy') {
+      this.saveDataToLocalStorage();
+      this.router.navigate(['/accountant/ledger-6']);
+    } else if (type === 'sotiennganhang') {
+      this.saveDataToLocalStorage();
+      this.router.navigate(['/accountant/ledger-7']);
     } else if (type === 'dangxuat') {
       const confirmed = confirm('Bạn có chắc chắn muốn đăng xuất?');
       if (confirmed) {

@@ -1,0 +1,130 @@
+<div class="table-wrapper">
+  <table class="ledger-table">
+    <!-- Header -->
+    <thead>
+      <tr>
+        <th class="stt-col">STT</th>
+        <th
+          *ngFor="let col of columns"
+          [style.width]="col.width || 'auto'"
+        >
+          {{ col.label }}
+        </th>
+        <th class="action-col">Thao Tác</th>
+      </tr>
+    </thead>
+
+    <!-- Body -->
+    <tbody>
+      <tr
+        *ngFor="let row of data; let i = index"
+        [class.highlight]="row.highlight"
+      >
+        <!-- Row number -->
+        <td class="stt-col">{{ i + 1 }}</td>
+
+        <!-- Columns -->
+        <td *ngFor="let col of columns">
+          <!-- Display mode -->
+          <ng-container *ngIf="editingId !== row.id">
+            <div class="cell-content">
+              {{ getCellDisplay(row, col) }}
+            </div>
+          </ng-container>
+
+          <!-- Edit mode -->
+          <ng-container *ngIf="editingId === row.id">
+            <!-- Text input -->
+            <input
+              *ngIf="col.type === 'text'"
+              type="text"
+              [(ngModel)]="row[col.key]"
+              [readonly]="col.readonly"
+              class="edit-input"
+            />
+
+            <!-- Number input -->
+            <input
+              *ngIf="col.type === 'number'"
+              type="number"
+              [(ngModel)]="row[col.key]"
+              [readonly]="col.readonly"
+              class="edit-input"
+            />
+
+            <!-- Date input -->
+            <input
+              *ngIf="col.type === 'date'"
+              type="date"
+              [value]="getDateInputValue(row[col.key])"
+              (change)="row[col.key] = $any($event.target).value"
+              class="edit-input"
+            />
+
+            <!-- Select dropdown -->
+            <select
+              *ngIf="col.type === 'select'"
+              [(ngModel)]="row[col.key]"
+              class="edit-input"
+            >
+              <option *ngFor="let opt of col.options" [value]="opt.value">
+                {{ opt.label }}
+              </option>
+            </select>
+
+            <!-- Checkbox -->
+            <input
+              *ngIf="col.type === 'checkbox'"
+              type="checkbox"
+              [(ngModel)]="row[col.key]"
+              class="edit-checkbox"
+            />
+          </ng-container>
+        </td>
+
+        <!-- Actions -->
+        <td class="action-col">
+          <button
+            *ngIf="editingId !== row.id"
+            (click)="startEdit(row)"
+            class="action-btn edit"
+          >
+            Sửa
+          </button>
+          <button
+            *ngIf="editingId === row.id"
+            (click)="saveEdit(row)"
+            class="action-btn save"
+          >
+            Lưu
+          </button>
+          <button
+            *ngIf="editingId === row.id"
+            (click)="cancelEdit()"
+            class="action-btn cancel"
+          >
+            Hủy
+          </button>
+          <button
+            *ngIf="editingId !== row.id"
+            (click)="deleteRow(row.id)"
+            class="action-btn delete"
+          >
+            Xóa
+          </button>
+        </td>
+      </tr>
+    </tbody>
+
+    <!-- Footer for sums -->
+    <tfoot *ngIf="hasSummable()">
+      <tr>
+        <td class="stt-col">Tổng</td>
+        <td *ngFor="let col of columns">
+          <span *ngIf="col.summable">{{ sumColumn(col.key) }}</span>
+        </td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

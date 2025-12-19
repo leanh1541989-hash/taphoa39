@@ -6,6 +6,7 @@ import { WorkSchedulePageComponent } from './components/work-schedule-page/work-
 import { AttendancePageComponent } from './components/attendance-page/attendance-page.component';
 import { EmployeeListPageComponent } from './components/employee-list-page/employee-list-page.component';
 import { PayrollPageComponent } from './components/payroll-page/payroll-page.component';
+import { ACCOUNTANT_ROUTES } from './components/accountant-pages/accountant.routes';
 
 export const routes: Routes = [
     { path: 'login', component: LoginPageComponent },
@@ -15,5 +16,6 @@ export const routes: Routes = [
     { path: 'attendance', component: AttendancePageComponent },
     { path: 'employee-list', component: EmployeeListPageComponent },
     { path: 'payroll', component: PayrollPageComponent },
+    { path: 'accountant', children: ACCOUNTANT_ROUTES },
     { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
