@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Subscription } from 'rxjs';
-import { AddWorkerDialogComponent } from '../add-worker-dialog/add-worker-dialog.component';
+import { AddWorkerDialogComponent } from '../employee-list-page/add-worker-dialog/add-worker-dialog.component';
 import { EmployeeService, Employee } from '../../services/employee.service';
 
 @Component({

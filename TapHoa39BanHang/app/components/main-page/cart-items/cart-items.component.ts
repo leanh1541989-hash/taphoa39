@@ -93,5 +93,7 @@ export class CartItemsComponent {
   formatPrice(price: number): string {
     return Math.abs(price).toLocaleString('en-US');
   }
-
+  hasOnHandNV(product: Product): boolean {
+    return (product?.OnHandNV ?? 0) > 0;
+  }
 }

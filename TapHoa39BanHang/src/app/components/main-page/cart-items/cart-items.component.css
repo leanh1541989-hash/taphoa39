@@ -200,3 +200,8 @@ input:active {
   border-radius: 2px;
   outline: none;
 }
+.cart-item.has-onhand-nv {
+  background: #f1e7dd;
+  border: 2px solid #e0ab7f;
+}
+

@@ -1,5 +1,5 @@
 <div class="cart-section column" *ngIf="cartItems.length > 0">
-  <div class="cart-item" *ngFor="let item of cartItems; let i = index">
+    <div class="cart-item" *ngFor="let item of cartItems; let i = index" [class.has-onhand-nv]="hasOnHandNV(item.product)">
     <div class="item-number">{{ i + 1 }}</div>
 
     <button id="deleteProductIimCartItem_{{i+1}}" class="delete-btn" (click)="removeItem(i)" tabindex="1">

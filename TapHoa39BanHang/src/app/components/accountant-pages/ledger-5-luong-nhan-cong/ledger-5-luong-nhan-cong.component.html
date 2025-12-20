@@ -1,0 +1,140 @@
+<!--
+  S5-HKD: SỔ THEO DÕI TÌNH HÌNH THANH TOÁN TIỀN LƯƠNG VÀ CÁC KHOẢN NỘP THEO LƯƠNG
+  Circular 88/2021/TT-BTC - Appendix 2 - Mẫu số S5-HKD
+-->
+<div class="ledger-page">
+  <!-- Page Title -->
+  <h2 class="page-title">SỔ THEO DÕI TÌNH HÌNH THANH TOÁN TIỀN LƯƠNG VÀ CÁC KHOẢN NỘP THEO LƯƠNG CỦA NGƯỜI LAO ĐỘNG</h2>
+
+  <!-- Opening Balance -->
+  <div class="opening-balance">
+    <div class="balance-title">Số dư đầu kỳ (Số còn phải trả/nộp)</div>
+    <div class="balance-grid">
+      <div class="balance-item">
+        <label>Tiền lương:</label>
+        <input type="number" [(ngModel)]="soDuDauKy.tienLuong" (blur)="updateSoDuDauKy()" />
+      </div>
+      <div class="balance-item">
+        <label>BHXH:</label>
+        <input type="number" [(ngModel)]="soDuDauKy.bhxh" (blur)="updateSoDuDauKy()" />
+      </div>
+      <div class="balance-item">
+        <label>BHYT:</label>
+        <input type="number" [(ngModel)]="soDuDauKy.bhyt" (blur)="updateSoDuDauKy()" />
+      </div>
+      <div class="balance-item">
+        <label>BHTN:</label>
+        <input type="number" [(ngModel)]="soDuDauKy.bhtn" (blur)="updateSoDuDauKy()" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Entry Form -->
+  <div class="entry-form">
+    <div class="form-title">Thêm bút toán lương & bảo hiểm</div>
+    
+    <!-- Basic info -->
+    <div class="form-section">
+      <div class="form-grid form-grid-basic">
+        <div class="form-group">
+          <label>Ngày ghi sổ *</label>
+          <input type="date" [(ngModel)]="newRecord.ngayThangGhiSo" />
+        </div>
+        <div class="form-group">
+          <label>Số hiệu CT *</label>
+          <input type="text" [(ngModel)]="newRecord.chungTu!.soHieu" placeholder="VD: BL001" />
+        </div>
+        <div class="form-group">
+          <label>Ngày CT</label>
+          <input type="date" [(ngModel)]="newRecord.chungTu!.ngayThang" />
+        </div>
+        <div class="form-group form-group-wide">
+          <label>Diễn giải *</label>
+          <input type="text" [(ngModel)]="newRecord.dienGiai" placeholder="Nội dung" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Salary & Insurance -->
+    <div class="form-section">
+      <div class="section-title">Chi tiết lương và bảo hiểm</div>
+      <div class="form-grid form-grid-detail">
+        <!-- Tiền lương -->
+        <div class="form-group-header">Tiền lương</div>
+        <div class="form-group">
+          <label>Phải trả</label>
+          <input type="number" [(ngModel)]="newRecord.luongPhaiTra" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>Đã trả</label>
+          <input type="number" [(ngModel)]="newRecord.luongDaTra" placeholder="0" />
+        </div>
+
+        <!-- BHXH -->
+        <div class="form-group-header">BHXH</div>
+        <div class="form-group">
+          <label>Phải nộp</label>
+          <input type="number" [(ngModel)]="newRecord.bhxhPhaiNop" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>Đã nộp</label>
+          <input type="number" [(ngModel)]="newRecord.bhxhDaNop" placeholder="0" />
+        </div>
+
+        <!-- BHYT -->
+        <div class="form-group-header">BHYT</div>
+        <div class="form-group">
+          <label>Phải nộp</label>
+          <input type="number" [(ngModel)]="newRecord.bhytPhaiNop" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>Đã nộp</label>
+          <input type="number" [(ngModel)]="newRecord.bhytDaNop" placeholder="0" />
+        </div>
+
+        <!-- BHTN -->
+        <div class="form-group-header">BHTN</div>
+        <div class="form-group">
+          <label>Phải nộp</label>
+          <input type="number" [(ngModel)]="newRecord.bhtnPhaiNop" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>Đã nộp</label>
+          <input type="number" [(ngModel)]="newRecord.bhtnDaNop" placeholder="0" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Note & Action -->
+    <div class="form-actions-row">
+      <div class="form-group form-group-note">
+        <label>Ghi chú</label>
+        <input type="text" [(ngModel)]="newRecord.ghiChu" />
+      </div>
+      <button class="btn-add" (click)="addRecord()">+ Thêm bút toán</button>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-bar">
+    <span>Số bút toán: <strong>{{ data.length }}</strong></span>
+    <span>Tổng lương phải trả: <strong>{{ getTongLuongPhaiTra() }}</strong></span>
+    <span>Tổng lương đã trả: <strong>{{ getTongLuongDaTra() }}</strong></span>
+  </div>
+
+  <!-- Data Table -->
+  <div class="table-wrapper">
+    <app-ledger-table
+      [headerRows]="headerRows"
+      [columnLabels]="columnLabels"
+      [dataColumns]="dataColumns"
+      [data]="data"
+      [footerRows]="footerRows"
+      [showStt]="false"
+      [editable]="true"
+      (rowSaved)="updateRecord($event)"
+      (rowDeleted)="deleteRecord($event)">
+    </app-ledger-table>
+  </div>
+
+</div>

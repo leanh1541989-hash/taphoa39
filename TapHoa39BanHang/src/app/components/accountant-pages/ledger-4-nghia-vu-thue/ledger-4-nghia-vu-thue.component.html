@@ -1,0 +1,85 @@
+<!--
+  S4-HKD: SỔ THEO DÕI TÌNH HÌNH THỰC HIỆN NGHĨA VỤ THUẾ VỚI NSNN
+  Circular 88/2021/TT-BTC - Appendix 2 - Mẫu số S4-HKD
+-->
+<div class="ledger-page">
+  <!-- Page Title -->
+  <h2 class="page-title">SỔ THEO DÕI TÌNH HÌNH THỰC HIỆN NGHĨA VỤ THUẾ VỚI NGÂN SÁCH NHÀ NƯỚC</h2>
+
+  <!-- Tax Type -->
+  <div class="tax-info">
+    <div class="info-row">
+      <label>Loại thuế:</label>
+      <select [(ngModel)]="loaiThue" (change)="saveData()">
+        <option value="Thuế GTGT">Thuế GTGT</option>
+        <option value="Thuế TNCN">Thuế TNCN</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Opening Balance -->
+  <div class="opening-balance">
+    <div class="balance-title">Số dư đầu kỳ (Số thuế còn phải nộp)</div>
+    <div class="balance-grid">
+      <div class="balance-item">
+        <label>Số tiền:</label>
+        <input type="number" [(ngModel)]="soDuDauKy" (blur)="updateSoDuDauKy()" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Entry Form -->
+  <div class="entry-form">
+    <div class="form-title">Thêm bút toán thuế</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Số hiệu CT *</label>
+        <input type="text" [(ngModel)]="newRecord.chungTu!.soHieu" placeholder="VD: TH001" />
+      </div>
+      <div class="form-group">
+        <label>Ngày CT</label>
+        <input type="date" [(ngModel)]="newRecord.chungTu!.ngayThang" />
+      </div>
+      <div class="form-group form-group-wide">
+        <label>Diễn giải *</label>
+        <input type="text" [(ngModel)]="newRecord.dienGiai" placeholder="Nội dung" />
+      </div>
+      <div class="form-group">
+        <label>Số thuế phải nộp</label>
+        <input type="number" [(ngModel)]="newRecord.soThuePhaINop" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Số thuế đã nộp</label>
+        <input type="number" [(ngModel)]="newRecord.soThueDaNop" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Ghi chú</label>
+        <input type="text" [(ngModel)]="newRecord.ghiChu" />
+      </div>
+      <div class="form-group">
+        <button class="btn-add" (click)="addRecord()">+ Thêm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-bar">
+    <span>Số bút toán: <strong>{{ data.length }}</strong></span>
+    <span>Tổng phải nộp: <strong>{{ getSoThuePhaINop() }}</strong></span>
+    <span>Tổng đã nộp: <strong>{{ getSoThueDaNop() }}</strong></span>
+    <span>Còn phải nộp: <strong class="highlight">{{ getSoDuCuoiKy() }}</strong></span>
+  </div>
+
+  <!-- Data Table -->
+  <app-ledger-table
+    [headerRows]="headerRows"
+    [columnLabels]="columnLabels"
+    [dataColumns]="dataColumns"
+    [data]="data"
+    [footerRows]="footerRows"
+    [showStt]="false"
+    [editable]="true"
+    (rowSaved)="updateRecord($event)"
+    (rowDeleted)="deleteRecord($event)">
+  </app-ledger-table>
+</div>
