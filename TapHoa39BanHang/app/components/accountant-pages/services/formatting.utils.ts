@@ -3,24 +3,33 @@
  */
 
 /**
- * Format number as Vietnamese currency (VND)
+ * Format number as currency (VND) with en-US style separators (1,000,000)
  */
 export function formatVND(value: number | null | undefined): string {
   if (value === null || value === undefined) return '0 ₫';
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
+  return new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(value);
+  }).format(value) + ' ₫';
 }
 
 /**
- * Format number with thousand separators
+ * Format number with thousand separators (en-US style: 1,000,000)
  */
 export function formatNumber(value: number | null | undefined): string {
   if (value === null || value === undefined) return '';
-  return new Intl.NumberFormat('vi-VN').format(value);
+  return new Intl.NumberFormat('en-US').format(value);
+}
+
+/**
+ * Format quantity (plain number without currency symbol, en-US style)
+ */
+export function formatQuantity(value: number | null | undefined): string {
+  if (value === null || value === undefined || value === 0) return '';
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(value);
 }
 
 /**

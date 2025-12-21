@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { formatVND, formatDate } from '../services/formatting.utils';
+import { formatVND, formatDate, formatQuantity } from '../services/formatting.utils';
 
 export interface HeaderCell {
   label: string;
@@ -26,6 +26,7 @@ export interface HeaderCell {
 export interface DataColumn {
   key: string;
   type: 'text' | 'number' | 'date';
+  subtype?: 'quantity' | 'currency'; // For number type: quantity (no symbol) or currency (with symbol)
   readonly?: boolean;
   class?: string;
   nestedKey?: string; // For nested objects like chungTu.soHieu
@@ -157,6 +158,10 @@ export class LedgerTableComponent implements OnInit {
 
     if (col.type === 'number') {
       if (value === null || value === undefined || value === 0) return '';
+      // Use formatQuantity for quantity columns (no currency symbol)
+      if (col.subtype === 'quantity') {
+        return formatQuantity(value);
+      }
       return formatVND(value).replace(' ₫', '');
     }
 

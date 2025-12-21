@@ -162,27 +162,7 @@ export class ProductService {
   }
 
   // Resolve backend base URL with optional runtime override via localStorage ('backendBaseUrl')
-  private getBackendBaseUrl(): string {
-    let base = environment.domainUrl;
-    try {
-      const override = localStorage.getItem('backendBaseUrl');
-      if (override && typeof override === 'string' && override.trim().length > 0) {
-        base = override.trim();
-      }
-    } catch (_) { /* ignore */ }
 
-    // Helpful diagnostics for multi-machine setups
-    try {
-      const isLocalEnv = /(^|\/)localhost(?=[:/]|$)|(^|\/)127\.0\.0\.1(?=[:/]|$)/i.test(environment.domainUrl);
-      const host = (window && window.location && window.location.hostname) ? window.location.hostname : '';
-      const isLocalHost = host === 'localhost' || host === '127.0.0.1';
-      if (isLocalEnv && !isLocalHost) {
-        console.warn('⚠️ environment.domainUrl is localhost but app is accessed from a non-local host. Consider setting localStorage.backendBaseUrl to your backend IP/host. Using base =', base);
-      }
-    } catch (_) { /* ignore */ }
-
-    return base;
-  }
 
   constructor(
     private http: HttpClient,

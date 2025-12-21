@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { IndexedDBService } from './indexed-db.service';
+import { environment } from '../../environments/environment';
 
 export interface Employee {
   id?: string;
@@ -103,7 +104,7 @@ export interface PayrollRecord {
   providedIn: 'root'
 })
 export class EmployeeService {
-  private baseUrl = 'http://localhost:5000/api/firebase';
+  private readonly baseUrl = '/api/firebase';
 
   // IndexedDB configuration
   private readonly DB_NAME = 'EmployeeDB';
@@ -270,7 +271,7 @@ export class EmployeeService {
   // ===============================
 
   getAllEmployees(useCache: boolean = true): Observable<Employee[]> {
-    return this.http.get<Employee[]>(`${this.baseUrl}/get/employees`).pipe(
+    return this.http.get<Employee[]>(`${environment.domainUrl}${environment.domainUrl}${this.baseUrl}/get/employees`).pipe(
       tap(async (employees) => {
         // Save to IndexedDB
         await this.saveEmployeesToIndexedDB(employees);
@@ -281,11 +282,11 @@ export class EmployeeService {
   }
 
   getEmployeeById(employeeId: string): Observable<Employee> {
-    return this.http.get<Employee>(`${this.baseUrl}/employees/${employeeId}`);
+    return this.http.get<Employee>(`${environment.domainUrl}${this.baseUrl}/employees/${employeeId}`);
   }
 
   addEmployee(employee: Employee): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/add_employee`, employee).pipe(
+    return this.http.post<any>(`${environment.domainUrl}${this.baseUrl}/add_employee`, employee).pipe(
       tap(async (response) => {
         if (response.success) {
           // Save to IndexedDB
@@ -298,7 +299,7 @@ export class EmployeeService {
   }
 
   updateEmployee(employeeId: string, updates: Partial<Employee>): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/update_employee/${employeeId}`, updates).pipe(
+    return this.http.put<any>(`${environment.domainUrl}${this.baseUrl}/update_employee/${employeeId}`, updates).pipe(
       tap(async (response) => {
         if (response.success) {
           // Update in IndexedDB
@@ -316,7 +317,7 @@ export class EmployeeService {
   }
 
   deleteEmployee(employeeId: string): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/delete_employee/${employeeId}`).pipe(
+    return this.http.delete<any>(`${environment.domainUrl}${this.baseUrl}/delete_employee/${employeeId}`).pipe(
       tap(async (response) => {
         if (response.success) {
           // Delete from IndexedDB
@@ -335,7 +336,7 @@ export class EmployeeService {
   // ===============================
 
   getAllWorkSchedules(): Observable<WorkSchedule[]> {
-    return this.http.get<WorkSchedule[]>(`${this.baseUrl}/get/work_schedules`);
+    return this.http.get<WorkSchedule[]>(`${environment.domainUrl}${this.baseUrl}/get/work_schedules`);
   }
 
   getWorkSchedulesByDateRange(fromDate: string, toDate: string): Observable<any> {
@@ -343,11 +344,11 @@ export class EmployeeService {
       .set('from_date', fromDate)
       .set('to_date', toDate);
 
-    return this.http.get<any>(`${this.baseUrl}/work_schedules/filter`, { params });
+    return this.http.get<any>(`${environment.domainUrl}${this.baseUrl}/work_schedules/filter`, { params });
   }
 
   saveWorkSchedule(schedule: WorkSchedule): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/save_work_schedule`, schedule).pipe(
+    return this.http.put<any>(`${environment.domainUrl}${this.baseUrl}/save_work_schedule`, schedule).pipe(
       tap(async (response) => {
         if (response.success) {
           // Save to IndexedDB after successful API save
@@ -433,11 +434,11 @@ export class EmployeeService {
   // ===============================
 
   getAllTimeSheets(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/get/time_sheets`);
+    return this.http.get<any[]>(`${environment.domainUrl}${this.baseUrl}/get/time_sheets`);
   }
 
   addTimeSheet(timeSheet: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/add_time_sheet`, timeSheet);
+    return this.http.post<any>(`${environment.domainUrl}${this.baseUrl}/add_time_sheet`, timeSheet);
   }
 
   // ===============================
@@ -445,15 +446,15 @@ export class EmployeeService {
   // ===============================
 
   getAllPayrolls(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/get/payrolls`);
+    return this.http.get<any[]>(`${environment.domainUrl}${this.baseUrl}/get/payrolls`);
   }
 
   addPayroll(payroll: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/add_payroll`, payroll);
+    return this.http.post<any>(`${environment.domainUrl}${this.baseUrl}/add_payroll`, payroll);
   }
 
   savePayroll(payroll: PayrollRecord): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/save_payroll`, payroll).pipe(
+    return this.http.put<any>(`${environment.domainUrl}${this.baseUrl}/save_payroll`, payroll).pipe(
       tap(async (response) => {
         if (response.success) {
           // Save to IndexedDB after successful API save
@@ -465,7 +466,7 @@ export class EmployeeService {
   }
 
   savePayrollsBatch(payrolls: PayrollRecord[]): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/save_payrolls_batch`, { payrolls }).pipe(
+    return this.http.put<any>(`${environment.domainUrl}${this.baseUrl}/save_payrolls_batch`, { payrolls }).pipe(
       tap(async (response) => {
         if (response.success) {
           // Save all to IndexedDB
@@ -477,11 +478,11 @@ export class EmployeeService {
 
   getPayrollsByPeriod(period: string): Observable<any> {
     const params = new HttpParams().set('period', period);
-    return this.http.get<any>(`${this.baseUrl}/payrolls/filter`, { params });
+    return this.http.get<any>(`${environment.domainUrl}${this.baseUrl}/payrolls/filter`, { params });
   }
 
   deletePayroll(payrollId: string): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/delete_payroll/${payrollId}`).pipe(
+    return this.http.delete<any>(`${environment.domainUrl}${this.baseUrl}/delete_payroll/${payrollId}`).pipe(
       tap(async (response) => {
         if (response.success) {
           // Delete from IndexedDB
@@ -771,7 +772,7 @@ export class EmployeeService {
   // ===============================
 
   saveAttendanceBatch(records: any[]): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/save_attendance_batch`, { records }).pipe(
+    return this.http.put<any>(`${environment.domainUrl}${this.baseUrl}/save_attendance_batch`, { records }).pipe(
       tap(async (response) => {
         if (response.success) {
           // Save all to IndexedDB
@@ -858,7 +859,7 @@ export class EmployeeService {
   // ===============================
 
   getAllAttendance(): Observable<AttendanceRecord[]> {
-    return this.http.get<AttendanceRecord[]>(`${this.baseUrl}/get/attendance`).pipe(
+    return this.http.get<AttendanceRecord[]>(`${environment.domainUrl}${this.baseUrl}/get/attendance`).pipe(
       tap(async (records) => {
         // Save to IndexedDB
         await this.saveAttendanceRecordsToIndexedDB(records);
@@ -873,7 +874,7 @@ export class EmployeeService {
       .set('from_date', fromDate)
       .set('to_date', toDate);
 
-    return this.http.get<any>(`${this.baseUrl}/attendance/filter`, { params }).pipe(
+    return this.http.get<any>(`${environment.domainUrl}${this.baseUrl}/attendance/filter`, { params }).pipe(
       tap(async (response) => {
         if (response.success && response.data) {
           // Save to IndexedDB
@@ -886,7 +887,7 @@ export class EmployeeService {
   }
 
   addAttendance(attendance: AttendanceRecord): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/add_attendance`, attendance).pipe(
+    return this.http.post<any>(`${environment.domainUrl}${this.baseUrl}/add_attendance`, attendance).pipe(
       tap(async (response) => {
         if (response.success && response.data) {
           // Save to IndexedDB
@@ -901,7 +902,7 @@ export class EmployeeService {
   }
 
   updateAttendance(attendanceId: string, updates: Partial<AttendanceRecord>): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/update_attendance/${attendanceId}`, updates).pipe(
+    return this.http.put<any>(`${environment.domainUrl}${this.baseUrl}/update_attendance/${attendanceId}`, updates).pipe(
       tap(async (response) => {
         if (response.success) {
           // Update in IndexedDB
@@ -919,7 +920,7 @@ export class EmployeeService {
   }
 
   deleteAttendance(attendanceId: string): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/delete_attendance/${attendanceId}`).pipe(
+    return this.http.delete<any>(`${environment.domainUrl}${this.baseUrl}/delete_attendance/${attendanceId}`).pipe(
       tap(async (response) => {
         if (response.success) {
           // Delete from IndexedDB
